@@ -121,9 +121,51 @@ const updateReport = async (req, res) => {
   }
 };
 
+/* =================================
+   DELETE REPORT
+================================= */
+const deleteReport = async (req, res) => {
+  try {
+    // Get ID from URL params
+    const { id } = req.params;
+
+    // Delete report from DB
+    const result = await pool.query(
+      `DELETE FROM reports
+       WHERE id = $1
+       RETURNING *`,
+      [id]
+    );
+
+    // If no report found
+    if (result.rows.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: 'Report not found'
+      });
+    }
+
+    // Success response
+    res.json({
+      success: true,
+      message: 'Report deleted successfully',
+      data: result.rows[0]
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Failed to delete report',
+      error: error.message
+    });
+  }
+};
+
+
 // Export controllers
 module.exports = {
   createReport,
   getAllReports,
-  updateReport
+  updateReport,
+  deleteReport
 };

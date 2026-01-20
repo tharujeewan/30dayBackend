@@ -10,11 +10,13 @@ const reportRoutes = require('./routes/report.routes');
 //create express app
 const app = express();
 
+
+
 //middleware to parse json body
 app.use(express.json());
 
 //register routes
-app.use('/reports', reportRoutes);
+app.use('/api/reports', reportRoutes);
 
 //health check 
 app.get('/', (req, res) => {
