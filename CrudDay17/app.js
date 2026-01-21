@@ -6,6 +6,7 @@ const express = require('express')
 
 //import routes
 const reportRoutes = require('./routes/report.routes');
+const authRoutes = require('./routes/auth.routes');
 
 //create express app
 const app = express();
@@ -14,6 +15,8 @@ const app = express();
 
 //middleware to parse json body
 app.use(express.json());
+
+app.use('/api/auth', authRoutes);
 
 //register routes
 app.use('/api/reports', reportRoutes);

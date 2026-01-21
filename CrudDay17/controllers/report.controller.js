@@ -1,5 +1,5 @@
 // Import DB pool
-const { pool } = require('../db');
+const { pool } = require('../config/db');
 
 /* =================================
    CREATE REPORT
@@ -19,8 +19,8 @@ const createReport = async (req, res) => {
 
     // Insert report into database
     const result = await pool.query(
-      `INSERT INTO reports (title, description, category)
-       VALUES ($1, $2, $3)
+      `INSERT INTO reports (title, description, category, user_id)
+       VALUES ($1, $2, $3, $4)
        RETURNING *`,
       [title, description, category]
     );
